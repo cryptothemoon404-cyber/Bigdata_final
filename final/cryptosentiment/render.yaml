@@ -1,0 +1,15 @@
+# Render.com deployment configuration
+# Deploy at https://render.com → "New Web Service" → connect this repo
+
+services:
+  - type: web
+    name: cryptosentiment-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DB_PATH
+        value: /tmp/sentiment.db
+      - key: ADMIN_SECRET
+        generateValue: true
+    autoDeploy: true
